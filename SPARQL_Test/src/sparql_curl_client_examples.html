@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SPARQL cURL Client Examples</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+dataRowDark
+{
+ font-size: 12px;
+ background-color: #E5E5E5;
+ font-family: arial, verdana, trebuchet ms, tahoma, sans-serif;
+}
+
+dataRowLight
+{
+ font-size: 12px;
+ background-color: #FFFFFF;
+ font-family: arial, verdana, trebuchet ms, tahoma, sans-serif;
+} 
+</style>
+
+</head>
+<body>
+
+     <form>
+<center>
+<h1>SPARQL cURL Client Examples</h1>
+</center>
+     <div>
+     <div>
+     <div>
+     <center>
+		  <table width="580px" cellpadding="3" cellspacing="0" border="0">
+
+  <col width="80">
+  <col width="500">
+
+
+		     <tr class="dataRowDark">
+		       <th scope="col" align="left">Description</th>
+		       <th scope="col" align="left">cURL Command</th>
+		     </tr>
+
+		   <tr class="dataRowDark">
+		      <td>Get fullsyn</td>
+		      <td>
+		      <pre>
+curl --data "query=prefix :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; prefix go_base:&lt;http://purl.obolibrary.org/obo/go.owl#&gt; prefix owl:&lt;http://www.w3.org/2002/07/owl#&gt; prefix rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; prefix rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; prefix xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; prefix oboInOwl:&lt;http://www.geneontology.org/formats/oboInOwl#&gt; prefix xml:&lt;http://www.w3.org/XML/1998/namespace&gt; prefix go:&lt;http://purl.obolibrary.org/obo/go#&gt; prefix obo:&lt;http://purl.obolibrary.org/obo/&gt; prefix dc:&lt;http://purl.org/dc/elements/1.1/&gt;  select distinct ?ncit_label ?ncit_code ?go_text { { graph &lt;http://NCIT_NG1&gt; { ?x a owl:Class . ?x :code \"C12354\"^^xsd:string . ?x :code ?ncit_code . ?x rdfs:label ?ncit_label . ?prop a owl:AnnotationProperty . ?prop rdfs:label \"FULL_SYN\"^^xsd:string . ?x ?prop ?go_text } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get role name and code</td>
+		      <td>
+		      <pre>
+curl --data "query=prefix :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; prefix go_base:&lt;http://purl.obolibrary.org/obo/go.owl#&gt; prefix owl:&lt;http://www.w3.org/2002/07/owl#&gt; prefix rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; prefix rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; prefix xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; prefix oboInOwl:&lt;http://www.geneontology.org/formats/oboInOwl#&gt; prefix xml:&lt;http://www.w3.org/XML/1998/namespace&gt; prefix go:&lt;http://purl.obolibrary.org/obo/go#&gt; prefix obo:&lt;http://purl.obolibrary.org/obo/&gt; prefix dc:&lt;http://purl.org/dc/elements/1.1/&gt;  select distinct ?prop_label ?prop_code { { graph &lt;http://NCIT_NG1&gt; { ?prop a owl:ObjectProperty . ?prop rdfs:label ?prop_label  . ?prop :code ?prop_code } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get property name and code</td>
+		      <td>
+		      <pre>
+curl --data "query=prefix :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; prefix go_base:&lt;http://purl.obolibrary.org/obo/go.owl#&gt; prefix owl:&lt;http://www.w3.org/2002/07/owl#&gt; prefix rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; prefix rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; prefix xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; prefix oboInOwl:&lt;http://www.geneontology.org/formats/oboInOwl#&gt; prefix xml:&lt;http://www.w3.org/XML/1998/namespace&gt; prefix go:&lt;http://purl.obolibrary.org/obo/go#&gt; prefix obo:&lt;http://purl.obolibrary.org/obo/&gt; prefix dc:&lt;http://purl.org/dc/elements/1.1/&gt;  select distinct ?prop_label ?prop_code { { graph &lt;http://NCIT_NG1&gt; { ?prop a owl:AnnotationProperty . ?prop rdfs:label ?prop_label  . ?prop :code ?prop_code } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get label by code</td>
+		      <td>
+		      <pre>
+curl --data "query=PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;  select ?x_label { graph &lt;http://NCIt_NG1&gt; { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?x rdfs:label ?x_label } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get ontology version info</td>
+		      <td>
+		      <pre>
+curl --data "query=PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;  SELECT ?x_version_info { graph &lt;http://NCIT_NG1&gt; { ?x a owl:Ontology . ?x owl:versionInfo ?x_version_info } }  " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get ontology info</td>
+		      <td>
+		      <pre>
+curl --data "query=PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;  SELECT ?x_comment { graph &lt;http://NCIt_NG1&gt; { ?x a owl:Ontology . ?x rdfs:comment ?x_comment } }  " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get inverse roles by code</td>
+		      <td>
+		      <pre>
+curl --data "query= PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;   SELECT distinct ?x_label ?x_code ?p_label { graph &lt;http://NCIt_NG1&gt; { { ?x a owl:Class . ?x :code ?x_code . ?x rdfs:label ?x_label . ?x rdfs:subClassOf ?z0 . ?z0 a owl:Class . ?z0 owl:intersectionOf ?list . ?list rdf:rest*/rdf:first ?z2 . ?z2 a owl:Restriction . ?z2 owl:onProperty ?p . ?p rdfs:label ?p_label . ?z2 owl:someValuesFrom ?y . ?y :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?y rdfs:label ?y_label } UNION { ?x a owl:Class . ?x :code ?x_code . ?x rdfs:label ?x_label . ?x rdfs:subClassOf ?r . ?r a owl:Restriction . ?r owl:onProperty ?p . ?p rdfs:label ?p_label . ?r owl:someValuesFrom ?y . ?y a owl:Class . ?y :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; } UNION { ?x a owl:Class . ?x :code ?x_code . ?x rdfs:label ?x_label . ?x owl:equivalentClass ?z . ?z owl:intersectionOf ?list . ?list rdf:rest*/rdf:first ?z2 . ?z2 a owl:Restriction . ?z2 owl:onProperty ?p . ?p rdfs:label ?p_label . ?z2 owl:someValuesFrom ?y . ?y a owl:Class . ?y :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; } UNION { ?x a owl:Class . ?x :code ?x_code . ?x rdfs:label ?x_label . ?x owl:equivalentClass ?z1 . ?z1 owl:intersectionOf ?list1 . ?list1 rdf:rest*/rdf:first ?z2 . ?z2 owl:unionOf ?list2 . ?list2 rdf:rest*/rdf:first ?z3 . ?z3 owl:intersectionOf ?list3 . ?list3 rdf:rest*/rdf:first ?z4 . ?z4 a owl:Restriction . ?z4 owl:onProperty ?p . ?p rdfs:label ?p_label . ?z4 owl:someValuesFrom ?y . ?y a owl:Class . ?y :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get inverse associations by code</td>
+		      <td>
+		      <pre>
+curl --data "query=PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;  SELECT ?z_label ?z_code ?y_label { graph &lt;http://NCIt_NG1&gt; { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?y a owl:ObjectProperty . ?y rdfs:label ?y_label . ?z ?y ?x . ?z a owl:Class . ?z rdfs:label ?z_label . ?z :code ?z_code }}  " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get code and label</td>
+		      <td>
+		      <pre>
+curl --data "query=select ?x_code ?x_label { graph &lt;http://NCIt_NG1&gt; { ?x a owl:Class . ?x :code ?x_code . ?x rdfs:label ?x_label } } limit 100 " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get class counts</td>
+		      <td>
+		      <pre>
+curl --data "query=SELECT ?g ( count(?class) as ?count ) { graph ?g { ?class a owl:Class } } group by ?g " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get class count</td>
+		      <td>
+		      <pre>
+curl --data "query=SELECT (count(?class) as ?count) { graph &lt;http://NCIt_NG1&gt; { ?class a owl:Class . } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get associations by code</td>
+		      <td>
+		      <pre>
+curl --data "query=PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;  SELECT ?y_label ?z_label ?z_code { graph &lt;http://NCIt_NG1&gt; { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?y a owl:ObjectProperty . ?x ?y ?z . ?z a owl:Class . ?y rdfs:label ?y_label . ?z rdfs:label ?z_label . ?z :code ?z_code } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get named graph</td>
+		      <td>
+		      <pre>
+curl --data "query=SELECT distinct ?g { { ?s ?p ?o } UNION { graph ?g { ?s ?p ?o } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get triple count</td>
+		      <td>
+		      <pre>
+curl --data "query=PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;  SELECT (count(*) as ?count) { graph &lt;http://NCIt_NG1&gt; { ?s ?p ?o . } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get superclasses by code</td>
+		      <td>
+		      <pre>
+curl --data "query=SELECT ?z_label ?z_code WHERE { graph &lt;http://NCIt_NG1&gt; { { { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?x rdfs:subClassOf ?z . ?z a owl:Class . ?z rdfs:label ?z_label . ?z :code ?z_code } FILTER (?x != ?z) } UNION { { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?x owl:equivalentClass ?y . ?y owl:intersectionOf ?list . ?list rdf:rest*/rdf:first ?z . ?z a owl:Class . ?z rdfs:label ?z_label . ?z :code ?z_code } FILTER (?x != ?z) } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get subclasses by code</td>
+		      <td>
+		      <pre>
+curl --data "query=SELECT ?y_label ?y_code { graph &lt;http://NCIt_NG1&gt; { { { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?y rdfs:subClassOf ?x . ?y a owl:Class . ?y rdfs:label ?y_label . ?y :code ?y_code . } FILTER (?x != ?y) } UNION { { ?y a owl:Class . ?y :code ?y_code . ?y rdfs:label ?y_label . ?y owl:equivalentClass ?z . ?z owl:intersectionOf ?list . ?list rdf:rest*/rdf:first ?x . ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . } FILTER (?x != ?y) } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowDark">
+		      <td>Get roles by code</td>
+		      <td>
+		      <pre>
+curl --data "query= PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;   SELECT distinct ?p_label ?y_label ?y_code { graph &lt;http://NCIt_NG1&gt; { { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?x rdfs:label ?x_label . ?x rdfs:subClassOf ?z0 . ?z0 a owl:Class . ?z0 owl:intersectionOf ?list . ?list rdf:rest*/rdf:first ?z2 . ?z2 a owl:Restriction . ?z2 owl:onProperty ?p . ?p rdfs:label ?p_label . ?z2 owl:someValuesFrom ?y . ?y :code ?y_code . ?y rdfs:label ?y_label } UNION { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?x rdfs:subClassOf ?r . ?r a owl:Restriction . ?r owl:onProperty ?p . ?p rdfs:label ?p_label . ?r owl:someValuesFrom ?y . ?y a owl:Class . ?y rdfs:label ?y_label . ?y :code ?y_code } UNION { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?x owl:equivalentClass ?z . ?z owl:intersectionOf ?list . ?list rdf:rest*/rdf:first ?z2 . ?z2 a owl:Restriction . ?z2 owl:onProperty ?p . ?p rdfs:label ?p_label . ?z2 owl:someValuesFrom ?y . ?y :code ?y_code . ?y rdfs:label ?y_label } UNION { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?x owl:equivalentClass ?z1 . ?z1 owl:intersectionOf ?list1 . ?list1 rdf:rest*/rdf:first ?z2 . ?z2 owl:unionOf ?list2 . ?list2 rdf:rest*/rdf:first ?z3 . ?z3 owl:intersectionOf ?list3 . ?list3 rdf:rest*/rdf:first ?z4 . ?z4 a owl:Restriction . ?z4 owl:onProperty ?p . ?p rdfs:label ?p_label . ?z4 owl:someValuesFrom ?y . ?y :code ?y_code . ?y rdfs:label ?y_label } } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		   <tr class="dataRowLight">
+		      <td>Get properties by code</td>
+		      <td>
+		      <pre>
+curl --data "query=PREFIX :&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#&gt; PREFIX base:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl&gt; PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt; PREFIX owl2xml:&lt;http://www.w3.org/2006/12/owl2-xml#&gt; PREFIX protege:&lt;http://protege.stanford.edu/plugins/owl/protege#&gt; PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt; PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt; PREFIX ncicp:&lt;http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#&gt; PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;  SELECT ?prop_label ?prop_value { graph &lt;http://NCIt_NG1&gt; { ?x a owl:Class . ?x :code \"C50577\"^^&lt;http://www.w3.org/2001/XMLSchema#string&gt; . ?y a owl:AnnotationProperty . ?y rdfs:label ?prop_label . ?x ?y ?prop_value } } " https://sparql-evs.nci.nih.gov/sparql
+		      </pre>
+		      </td>
+		  </tr>
+		  </table>
+		  </center>
+          <br/>
+
+        </div>
+        <!-- End of Source content -->
+    </div>
+    </div>
+     </form>
+
+</body>
+</html>

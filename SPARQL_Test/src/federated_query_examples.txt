@@ -1,0 +1,125 @@
+
+SPARQL Federated Query Examples
+
+		      Get go axioms
+
+prefix <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+prefix go_base<http://purl.obolibrary.org/obo/go.owl#>
+prefix owl<http://www.w3.org/2002/07/owl#>
+prefix rdfs<http://www.w3.org/2000/01/rdf-schema#>
+prefix rdf<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix xsd<http://www.w3.org/2001/XMLSchema#>
+prefix oboInOwl<http://www.geneontology.org/formats/oboInOwl#>
+prefix xml<http://www.w3.org/XML/1998/namespace>
+prefix go<http://purl.obolibrary.org/obo/go#>
+prefix obo<http://purl.obolibrary.org/obo/>
+prefix dc<http://purl.org/dc/elements/1.1/>
+
+select distinct ?ncit_label ?ncit_code ?go_text ?go_code ?go_obo_ns ?axiom_src ?axiom_prop ?axiom_target ?axiom_xref
+{
+    {
+	graph <http://NCIT_NG1> {
+	    ?x a owl:Class .
+            ?x :code ?ncit_code .
+	    ?x rdfs:label ?ncit_label .
+	    ?prop a owl:AnnotationProperty .
+	    ?prop rdfs:label "FULL_SYN"^^xsd:string .
+	    ?x ?prop ?go_text
+	}
+
+	service <http://sparql-evs-dev.nci.nih.gov/sparql> {
+	    graph <http://GO_NG1> {
+	         ?z a owl:Class .
+	         ?z rdfs:label ?go_text .
+	         ?z oboInOwl:id ?go_code .
+	         ?z oboInOwl:hasOBONamespace ?go_obo_ns .
+
+	         OPTIONAL {
+			 ?z owl:Axiom ?z_axiom .
+			 ?z_axiom owl:annotatedSource ?axiom_src .
+			 ?z_axiom owl:annotatedProperty ?axiom_prop .
+			 ?z_axiom owl:annotatedTarget ?axiom_target .
+			 ?z_axiom oboInOwl:hasDbXref ?axiom_xref
+	         }
+	    }
+	}
+    }
+}
+limit 200
+
+
+		      Get go exact synonyms
+
+prefix <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+prefix go_base<http://purl.obolibrary.org/obo/go.owl#>
+prefix owl<http://www.w3.org/2002/07/owl#>
+prefix rdfs<http://www.w3.org/2000/01/rdf-schema#>
+prefix rdf<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix xsd<http://www.w3.org/2001/XMLSchema#>
+prefix oboInOwl<http://www.geneontology.org/formats/oboInOwl#>
+prefix xml<http://www.w3.org/XML/1998/namespace>
+prefix go<http://purl.obolibrary.org/obo/go#>
+prefix obo<http://purl.obolibrary.org/obo/>
+prefix dc<http://purl.org/dc/elements/1.1/>
+
+select distinct ?ncit_label ?ncit_code ?go_text ?go_code ?go_syn
+{
+    {
+	graph <http://NCIT_NG1> {
+	    ?x a owl:Class .
+            ?x :code "C28151"^^xsd:string .
+	    ?x rdfs:label ?ncit_label .
+	    ?prop a owl:AnnotationProperty .
+	    ?prop rdfs:label "FULL_SYN"^^xsd:string .
+	    ?x ?prop ?go_text
+	}
+
+	service <http://sparql-evs-dev.nci.nih.gov/sparql> {
+	    graph <http://GO_NG1> {
+	         ?z a owl:Class .
+	         ?z rdfs:label ?go_text .
+	         ?z oboInOwl:id ?go_code .
+	         ?z oboInOwl:hasExactSynonym ?go_syn
+	    }
+	}
+    }
+}
+
+
+		      Ncit to go mapping
+
+prefix <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+prefix go_base<http://purl.obolibrary.org/obo/go.owl#>
+prefix owl<http://www.w3.org/2002/07/owl#>
+prefix rdfs<http://www.w3.org/2000/01/rdf-schema#>
+prefix rdf<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix xsd<http://www.w3.org/2001/XMLSchema#>
+prefix oboInOwl<http://www.geneontology.org/formats/oboInOwl#>
+prefix xml<http://www.w3.org/XML/1998/namespace>
+prefix go<http://purl.obolibrary.org/obo/go#>
+prefix obo<http://purl.obolibrary.org/obo/>
+prefix dc<http://purl.org/dc/elements/1.1/>
+
+select distinct ?ncit_label ?ncit_code ?go_text ?go_code
+{
+    {
+	graph <http://NCIT_NG1> {
+	    ?x a owl:Class .
+            ?x :code ?ncit_code .
+	    ?x rdfs:label ?ncit_label .
+	    ?prop a owl:AnnotationProperty .
+	    ?prop rdfs:label "FULL_SYN"^^xsd:string .
+	    ?x ?prop ?go_text
+	}
+
+	service <http://sparql-evs-dev.nci.nih.gov/sparql> {
+	    graph <http://GO_NG1> {
+	         ?z a owl:Class .
+	         ?z rdfs:label ?go_text .
+	         ?z oboInOwl:id ?go_code
+	    }
+	}
+    }
+}
+limit 10
+		     
