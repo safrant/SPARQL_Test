@@ -1,0 +1,283 @@
+https://github.com/NCIEVS/evsrestapi/blob/master/software/evsrestapi-util/src/gov/nih/nci/evs/restapi/util/OWLSPARQLUtils.java
+
+
+PREFIX :<http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX base:<http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl>
+PREFIX Thesaurus:<http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX xml:<http://www.w3.org/XML/1998/namespace>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl:<http://www.w3.org/2002/07/owl#>
+PREFIX owl2xml:<http://www.w3.org/2006/12/owl2-xml#>
+PREFIX protege:<http://protege.stanford.edu/plugins/owl/protege#>
+PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ncicp:<http://ncicb.nci.nih.gov/xml/owl/EVS/ComplexProperties.xsd#>
+PREFIX dc:<http://purl.org/dc/elements/1.1/>
+
+SELECT ?z_label ?z_code ?x_label ?x_code
+{
+    graph <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl>
+  {
+	  {
+		  {
+		    ?x a owl:Class .
+		    ?x rdfs:label ?x_label .
+		    ?x :NHC0 ?x_code .
+		    ?x rdfs:subClassOf ?z .
+		    ?z a owl:Class .
+		    ?z rdfs:label ?z_label .
+		    ?z :NHC0 ?z_code
+		  }
+		  FILTER (?x != ?z)
+	  }
+  	  UNION
+	  {
+		  {
+		    ?x a owl:Class .
+		    ?x rdfs:label ?x_label .
+		    ?x :NHC0 ?x_code .
+		    ?x owl:equivalentClass ?y .
+		    ?y owl:intersectionOf ?list .
+		    ?list rdf:rest*/rdf:first ?z .
+		    ?z a owl:Class .
+		    ?z rdfs:label ?z_label .
+		    ?z :NHC0 ?z_code
+		  }
+		  FILTER (?x != ?z)
+	  }
+  }
+}
+
+SELECT distinct ?x_label ?x_code ?p_label ?z ?w_label ?w_value
+{
+	graph <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl>
+	{
+	?x a owl:Class .
+	?x rdfs:label ?x_label .
+	?y a owl:AnnotationProperty .
+	?x ?y ?z .
+	?y rdfs:label ?y_label .
+	?z_axiom a owl:Axiom .
+	?z_axiom owl:annotatedSource ?x .
+	?z_axiom owl:annotatedProperty ?p .
+	?p rdfs:label ?p_label .
+	?z_axiom owl:annotatedTarget ?z .
+	?w rdfs:label ?w_label .
+	?z_axiom ?w ?w_value
+	}
+	FILTER (str(?x) = "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C2955"^^xsd:string)
+}
+
+
+SELECT ?x_label ?x_code ?y_label
+{
+    graph <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl>
+    {
+	    ?x a owl:Class .
+	    ?x rdfs:label ?x_label .
+	    ?x :NHC0 ?x_code .
+	    ?y a owl:AnnotationProperty .
+	    ?x ?y ?z .
+	    ?z a owl:Class .
+	    ?z rdfs:label ?z_label .
+	    ?z :NHC0 "C17998"^^<http://www.w3.org/2001/XMLSchema#string> .
+	    ?y rdfs:label ?y_label .
+	    ?y :NHC0 ?y_code .
+	    ?y rdfs:range ?y_range
+    }
+    FILTER (str(?y_range)=\"http://www.w3.org/2001/XMLSchema#anyURI\")
+}
+
+
+SELECT distinct ?x ?x_label
+{
+	graph <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl>
+	{
+	?x a owl:Class .
+	?x rdfs:label ?x_label .
+	}
+	FILTER regex(?x_label, ".*neoplasm.*", "i")
+}
+
+
+SELECT ?x_version_info ?x_dc_date ?x_comment
+{
+    graph <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl>
+    {
+	    ?x a owl:Ontology .
+	    ?x owl:versionInfo ?x_version_info .
+	    ?x dc:date ?x_dc_date .
+	    ?x rdfs:comment ?x_comment
+    }
+}
+
+
+SELECT distinct ?x_label ?x_code ?p_label
+{
+    graph <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl>
+    {
+	   {
+		?x a owl:Class .
+		?x :NHC0 ?x_code .
+		?x rdfs:label ?x_label .
+		?x rdfs:subClassOf ?r .
+		?r a owl:Restriction .
+		?r owl:onProperty ?p .
+		?p rdfs:label ?p_label .
+		?r owl:someValuesFrom ?y .
+		?y a owl:Class .
+		?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string>
+	   }
+	   UNION
+	    {
+		?x a owl:Class .
+		?x :NHC0 ?x_code .
+		?x rdfs:label ?x_label .
+		?x owl:equivalentClass ?z0 .
+		?z0 a owl:Class .
+		?z0 owl:intersectionOf ?list .
+		?list rdf:rest*/rdf:first ?z2 .
+		?z2 a owl:Restriction .
+		?z2 owl:onProperty ?p .
+		?p rdfs:label ?p_label .
+		?z2 owl:someValuesFrom ?y .
+		?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> .
+		?y rdfs:label ?y_label
+	    }
+	   UNION
+	   {
+		?x a owl:Class .
+		?x :NHC0 ?x_code .
+		?x rdfs:label ?x_label .
+		?x owl:equivalentClass ?z0 .
+		?z0 a owl:Class .
+		?z0 owl:intersectionOf ?list .
+		?list rdf:rest*/rdf:first ?z2 .
+		?z2 a owl:Restriction .
+		?z2 owl:onProperty ?p .
+		?p rdfs:label ?p_label .
+		?z2 owl:someValuesFrom ?y .
+		?y a owl:Class .
+		?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> "
+	   }
+	   UNION
+	   {
+		?x a owl:Class .
+		?x :NHC0 ?x_code .
+		?x rdfs:label ?x_label .
+		?x owl:equivalentClass ?z0 .
+		?z0 a owl:Class .
+		?z0 owl:intersectionOf ?list1 .
+		?list1 rdf:rest*/rdf:first ?z2 .
+		?z2 owl:unionOf ?list2 .
+   	        ?list2 rdf:rest*/rdf:first ?z3 .
+		?z3 owl:intersectionOf ?list3 .
+		?list3 rdf:rest*/rdf:first ?z4 .
+		?z4 a owl:Restriction .
+		?z4 owl:onProperty ?p .
+		?p rdfs:label ?p_label .
+		?z4 owl:someValuesFrom ?y .
+		?y a owl:Class .
+		?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> 
+	   }
+   }
+} 
+
+SELECT distinct ?x_label ?x_code ?p_label 
+{
+    graph <" + named_graph + ">
+    { 
+
+	    {
+		?x a owl:Class .
+		?x :NHC0 ?code .
+		?x rdfs:label ?x_code .
+		?x rdfs:subClassOf ?z0 .
+		?z0 a owl:Class .
+		?z0 owl:intersectionOf ?list .
+		?list rdf:rest*/rdf:first ?z2 .
+		?z2 a owl:Restriction .
+		?z2 owl:onProperty ?p .
+		?p rdfs:label ?p_label .
+		?z2 owl:someValuesFrom ?y .
+		?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> .
+		?y rdfs:label ?y_label
+	    }
+	   UNION
+
+	   {
+		?x a owl:Class .
+		?x :NHC0 ?x_code .
+		?x rdfs:label ?x_label .
+
+		?x rdfs:subClassOf ?r .
+
+		?r a owl:Restriction .
+		?r owl:onProperty ?p .
+		?p rdfs:label ?p_label .
+		?r owl:someValuesFrom ?y .
+		?y a owl:Class .
+		?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> 
+	   }
+
+	   UNION
+	   {
+		?x a owl:Class .
+		?x :NHC0 ?x_code .
+		?x rdfs:label ?x_label .
+
+		?x owl:equivalentClass ?z0 .
+		?z0 a owl:Class .
+		?z0 owl:intersectionOf ?list .
+
+			?list rdf:rest*/rdf:first ?z2 .
+				?z2 a owl:Restriction .
+				?z2 owl:onProperty ?p .
+				?p rdfs:label ?p_label .
+				?z2 owl:someValuesFrom ?y .
+				?y a owl:Class .
+				?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> 
+	   }
+	   UNION
+	   {
+		?x a owl:Class .
+		?x :NHC0 ?x_code .
+		?x rdfs:label ?x_label .
+
+		?x owl:equivalentClass ?z0 .
+		?z0 a owl:Class .
+		?z0 owl:intersectionOf ?list1 .
+
+			?list1 rdf:rest*/rdf:first ?z2 .
+			     ?z2 owl:unionOf ?list2 .
+			     ?list2 rdf:rest*/rdf:first ?z3 .
+				 ?z3 owl:intersectionOf ?list3 .
+				 ?list3 rdf:rest*/rdf:first ?z4 .
+					?z4 a owl:Restriction .
+					?z4 owl:onProperty ?p .
+					?p rdfs:label ?p_label .
+					?z4 owl:someValuesFrom ?y .
+					?y a owl:Class .
+					?y :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> 
+	   }
+   }
+}
+
+SELECT ?x_label ?x_code ?y_label
+{
+    graph <" + named_graph + ">
+    {
+	    ?x a owl:Class .
+	    ?x rdfs:label ?x_label .
+	    ?x :NHC0 ?x_code .
+	    ?y a owl:AnnotationProperty .
+	    ?x ?y ?z .
+	    ?z a owl:Class .
+	    ?z rdfs:label ?z_label .
+	    ?z :NHC0 \"" + code + "\"^^<http://www.w3.org/2001/XMLSchema#string> .
+	    ?y rdfs:label ?y_label .
+	    ?y :NHC0 ?y_code .
+	    ?y rdfs:range ?y_range
+    }
+    FILTER (str(?y_range)=\"http://www.w3.org/2001/XMLSchema#anyURI\")
+}
